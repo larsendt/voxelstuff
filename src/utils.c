@@ -27,7 +27,7 @@ void check_gl_error(char *file, int line)
                 fprintf(stderr, "%s:%d: GL_STACK_UNDERFLOW (%d)\n", file, line, err);
                 break;
             case GL_STACK_OVERFLOW:
-                fprintf(stderr, "%s:%d: GL_GL_STACK_OVERFLOW (%d)\n", file, line, err);
+                fprintf(stderr, "%s:%d: GL_STACK_OVERFLOW (%d)\n", file, line, err);
                 break;
             default:
                 fprintf(stderr, "%s:%d: Unknown OpenGL Error (%d)\n", file, line, err);
