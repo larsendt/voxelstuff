@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 2.6)
+project(voxelfield)
+file(GLOB sources "src/*.c")
+add_executable(voxelfield ${sources})
+target_link_libraries(voxelfield zmq m glfw Xrandr GL)
