@@ -1,10 +1,8 @@
 #include "voxelfield.h"
-#include "pnoise.h"
+#include "simplexnoise.h"
 
 voxelfield vf_new(double granularity)
 {
-    init_noise();
-
     voxelfield vf;
     vf.granularity = granularity;
     return vf;
@@ -12,7 +10,7 @@ voxelfield vf_new(double granularity)
 
 double vf_value_at(voxelfield *vf, double x, double y, double z)
 {
-    return pnoise(x * vf->granularity, y * vf->granularity, z * vf->granularity);
+    return raw_noise_3d(x * vf->granularity, y * vf->granularity, z * vf->granularity);
 }
 
 int vf_neighbor_bits(voxelfield *vf, double x, double y, double z, double tolerance)

@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 project(voxelfield)
-file(GLOB sources "src/*.c")
+file(GLOB sources "src/*.cpp")
+add_definitions(-DGL_GLEXT_PROTOTYPES)
 add_executable(voxelfield ${sources})
 target_link_libraries(voxelfield m glfw Xrandr GL)

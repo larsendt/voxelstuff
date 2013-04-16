@@ -3,7 +3,7 @@
 #include <GL/gl.h>
 #include <stdio.h>
 
-void check_gl_error(char *file, int line)
+void check_gl_error(const char *file, int line)
 {
     GLenum err = glGetError();
     if(err != GL_NO_ERROR) {

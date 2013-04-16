@@ -23,3 +23,4 @@ void main()
     light_intensity = Ld * Kd * max(dot(light_dir, tnorm), 0.0);
     gl_Position = mvp_mat * vec4(pos, 1.0);
 }
+

@@ -4,10 +4,13 @@
 #include "meshobject.h"
 
 #include <GL/glfw.h>
-#include <stdio.h>
+#include <cstdio>
+#include <cstdlib>
 
 typedef struct engine_state {
-    meshobject_t mesh;
+    MeshObject *mesh;
+    Shader *shader;
+    VertexBuffer *vbo;
 } engine_state;
 
 engine_state engine_init();
@@ -32,11 +35,13 @@ int voxelengine_run()
 
     while(glfwGetWindowParam(GLFW_OPENED)) {
         engine_draw(&state);
-        check_gl_error(__FILE__, __LINE__);
         glfwSwapBuffers();
+        check_gl_error(__FILE__, __LINE__);
     }
 
-    free_meshobject(&state.mesh);
+    delete state.mesh;
+    delete state.shader;
+    delete state.vbo;
     return 0;
 }
 
@@ -53,11 +58,16 @@ engine_state engine_init()
     vertices[4] = vx_new( sz, -sz, 0, 0, 0, 1, 1, 1, 1, 1);
     vertices[5] = vx_new( sz,  sz, 0, 0, 0, 1, 1, 1, 1, 1);
 
-    vertexbuffer_t vbo = vbo_new(GL_TRIANGLES, vertices, 6);
-    shader_t shader = new_shader("../shaders/plain.vert", "../shaders/plain.frag");
-
     engine_state state;
-    state.mesh = new_meshobject(shader, vbo);
+    state.vbo = new VertexBuffer(GL_TRIANGLES, vertices, 6);
+    state.shader = new Shader("../shaders/plain.vert", "../shaders/plain.frag");
+
+    if(!state.shader->is_valid) {
+        fprintf(stderr, "Failed to load shader\n");
+        exit(1);
+    }
+
+    state.mesh = new MeshObject(state.shader, state.vbo);
     return state;
 }
 
@@ -65,7 +75,7 @@ void engine_draw(engine_state *state)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    draw_meshobject(&state->mesh);
+    state->mesh->draw();
     /*glBegin(GL_POLYGON);
     glVertex3f(-0.5, -0.5, 0.0);
     glVertex3f(0.5, -0.5, 0.0);

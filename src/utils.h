@@ -1,6 +1,12 @@
-#ifndef __utils_h__
-#define __utils_h__
+//----------------------------------
+// utils.h
+//
+// Convenience functions for opengl.
+// Currently only contains an error
+// checking and printing function.
+//----------------------------------
 
-void check_gl_error();
+#pragma once
 
-#endif
+void check_gl_error(const char *file, int line);
+

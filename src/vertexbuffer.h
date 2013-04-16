@@ -2,19 +2,19 @@
 
 #include "vertex.h"
 
-#define GL_GLEXT_PROTOTYPES
 #include <GL/gl.h>
-#include <GL/glext.h>
 
-typedef struct vertexbuffer_t {
-    GLuint vbo_handle;
-    GLuint vao_handle;
-    GLenum mode;
-    int vx_count;
-} vertexbuffer_t;
+class VertexBuffer
+{
+    public:
+        VertexBuffer(GLenum mode, vertex *vertices, unsigned int count);
+        ~VertexBuffer();
 
-vertexbuffer_t vbo_new(GLenum mode, vertex *vertices, unsigned int count);
-void vbo_free(vertexbuffer_t *buf);
-void vbo_draw(vertexbuffer_t *buf);
+        void draw();
 
+        GLuint vbo_handle;
+        GLuint vao_handle;
+        GLenum mode;
+        unsigned int vx_count;
+};
 

@@ -1,21 +1,31 @@
+//------------------------------------------
+// shader.h
+//
+// Fancy shader wrapper. Takes care of
+// loading shader sources from the given
+// paths, compiles and links shader program.
+// Also defines convenience functions for
+// setting uniforms.
+//-------------------------------------------
 #pragma once
 
-#define GL_GLEXT_PROTOTYPES
 #include <GL/gl.h>
 
-typedef struct shader_t {
-    GLuint handle;
-    int is_valid;
-} shader_t;
+class Shader
+{
+    public:
+        Shader(const char *vert_file, const char *frag_file);
+        ~Shader();
 
-shader_t new_shader(char *vert_file, char *frag_file);
-void free_shader(shader_t *s);
+        void setUniform1f(char *name, float v1);
+        void setUniform3f(char *name, float v1, float v2, float v3);
+        void setUniform4f(char *name, float v1, float v2, float v3, float v4);
 
-void setUniform1f(shader_t *s, char *name, float v1);
-void setUniform3f(shader_t *s, char *name, float v1, float v2, float v3);
-void setUniform4f(shader_t *s, char *name, float v1, float v2, float v3, float v4);
+        void setUniform1i(char *name, int v1);
 
-void setUniform1i(shader_t *s, char *name, int v1);
+        void setUniformMatrix3fv(char *name, float *mat);
+        void setUniformMatrix4fv(char *name, float *mat);
 
-void setUniformMatrix3fv(shader_t *s, char *name, float *mat);
-void setUniformMatrix4fv(shader_t *s, char *name, float *mat);
+        GLuint handle;
+        bool is_valid;
+};
